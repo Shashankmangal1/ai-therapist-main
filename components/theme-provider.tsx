@@ -4,11 +4,10 @@ import { ReactNode } from "react";
 
 
 
-export function ThemeProvider({ children }: {
-    children: ReactNode }) {
-        return (
-            <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
-                {children}
-            </NextThemesProvider>
-        );
-    }
+export function ThemeProvider({ children, ...props }: { children: ReactNode } & Record<string, any>) {
+    return (
+        <NextThemesProvider {...props}>
+            {children}
+        </NextThemesProvider>
+    );
+}
