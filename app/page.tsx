@@ -19,6 +19,7 @@ import {
   MessageSquareHeart,
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import type { MotionProps } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { useState, useEffect } from "react";
 import {
@@ -30,6 +31,9 @@ import {
 } from "@/components/ui/dialog";
 import React from "react";
 import { Ripple } from "@/components/ui/ripple";
+
+type MotionDivProps = React.ComponentProps<"div"> & MotionProps;
+const MotionDiv = motion.div as React.ComponentType<MotionDivProps>;
 
 export default function Home() {
   const emotions = [
@@ -47,7 +51,7 @@ export default function Home() {
 
   const welcomeSteps = [
     {
-      title: "Hi, I'm Aura 👋",
+      title: "Hi, I'm Calmly 👋",
       description:
         "Your AI companion for emotional well-being. I'm here to provide a safe, judgment-free space for you to express yourself.",
       icon: Waves,
@@ -119,7 +123,7 @@ export default function Home() {
         </div>
         <Ripple className="opacity-60" />
 
-        <motion.div
+        <MotionDiv
           className="relative space-y-8 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
@@ -151,7 +155,7 @@ export default function Home() {
           </p>
 
           {/* Emotion slider section with enhanced transitions */}
-          <motion.div
+          <MotionDiv
             className="w-full max-w-[600px] mx-auto space-y-6 py-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
@@ -203,10 +207,10 @@ export default function Home() {
                 Slide to express how you're feeling today
               </p>
             </div>
-          </motion.div>
+          </MotionDiv>
 
           {/* Enhanced CTA button and welcome dialog */}
-          <motion.div
+          <MotionDiv
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
@@ -223,11 +227,11 @@ export default function Home() {
               </span>
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-size-200 bg-pos-0 group-hover:bg-pos-100" />
             </Button>
-          </motion.div>
-        </motion.div>
+          </MotionDiv>
+        </MotionDiv>
 
         {/* Enhanced scroll indicator */}
-        <motion.div
+        <MotionDiv
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -236,7 +240,7 @@ export default function Home() {
           <div className="w-6 h-10 rounded-full border-2 border-primary/20 flex items-start justify-center p-1 hover:border-primary/40 transition-colors duration-300">
             <div className="w-1 h-2 rounded-full bg-primary animate-scroll" />
           </div>
-        </motion.div>
+        </MotionDiv>
       </section>
 
       {/* Enhanced Features Grid */}
@@ -244,7 +248,7 @@ export default function Home() {
         {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" /> */}
 
         <div className="max-w-6xl mx-auto">
-          <motion.div className="text-center mb-16 space-y-4 text-white ">
+          <MotionDiv className="text-center mb-16 space-y-4 text-white ">
             <h2 className="text-3xl font-bold bg-gradient-to-r from-primary/90 to-primary bg-clip-text text-transparent dark:text-primary/90">
               How Calmly Helps You
             </h2>
@@ -252,11 +256,11 @@ export default function Home() {
               Experience a new kind of emotional support, powered by empathetic
               AI
             </p>
-          </motion.div>
+          </MotionDiv>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative">
             {features.map((feature, index) => (
-              <motion.div
+              <MotionDiv
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -270,7 +274,9 @@ export default function Home() {
                   <CardHeader className="pb-4">
                     <div className="flex items-center gap-3">
                       <div className="p-2 rounded-xl bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors duration-300">
-                        <feature.icon className="w-5 h-5 text-primary dark:text-primary/90" />
+                        {React.createElement(feature.icon, {
+                          className: "w-5 h-5 text-primary dark:text-primary/90",
+                        })}
                       </div>
                       <h3 className="font-semibold tracking-tight text-foreground/90 dark:text-foreground">
                         {feature.title}
@@ -284,7 +290,7 @@ export default function Home() {
                   </CardContent>
                   <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/20 dark:via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </Card>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         </div>
@@ -293,7 +299,7 @@ export default function Home() {
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="sm:max-w-[425px] bg-card/80 backdrop-blur-lg">
           <DialogHeader>
-            <motion.div
+            <MotionDiv
               key={currentStep}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -316,7 +322,7 @@ export default function Home() {
               <DialogDescription className="text-center text-base leading-relaxed">
                 {welcomeSteps[currentStep]?.description}
               </DialogDescription>
-            </motion.div>
+            </MotionDiv>
           </DialogHeader>
           <div className="flex justify-between items-center mt-8">
             <div className="flex gap-2">
