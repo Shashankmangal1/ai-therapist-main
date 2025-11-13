@@ -1,0 +1,159 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Define dark variant */
+@custom-variant dark (&:is(.dark *));
+
+/* Tailwind v4 theme tokens */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: 0.75rem;
+}
+
+/* ---------- LIGHT THEME ---------- */
+:root {
+  --background: hsl(180 20% 99%);
+  --foreground: hsl(200 8% 24%);
+  --card: hsl(180 20% 99%);
+  --card-foreground: hsl(200 8% 24%);
+  --popover: hsl(180 20% 99%);
+  --popover-foreground: hsl(200 8% 24%);
+  --primary: hsl(292, 30%, 60%);
+  --primary-foreground: hsl(150 40% 16%);
+  --secondary: hsl(250 20% 96%);
+  --secondary-foreground: hsl(250 10% 30%);
+  --muted: hsl(210 20% 96%);
+  --muted-foreground: hsl(215 16% 45%);
+  --accent: hsl(180 25% 95%);
+  --accent-foreground: hsl(200 8% 24%);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(210 20% 98%);
+  --border: hsl(200 10% 90%);
+  --input: hsl(200 10% 90%);
+  --ring: hsl(150 30% 60%);
+}
+
+/* ---------- DARK THEME ---------- */
+.dark {
+  --background: hsl(200 50% 3%);
+  --foreground: hsl(210 20% 98%);
+  --card: hsl(200 50% 3%);
+  --card-foreground: hsl(210 20% 98%);
+  --popover: hsl(200 50% 3%);
+  --popover-foreground: hsl(210 20% 98%);
+  --primary: hsl(248, 29%, 70%);
+  --primary-foreground: hsl(150 40% 16%);
+  --secondary: hsl(250 20% 20%);
+  --secondary-foreground: hsl(210 20% 98%);
+  --muted: hsl(200 50% 10%);
+  --muted-foreground: hsl(210 20% 70%);
+  --accent: hsl(200 50% 10%);
+  --accent-foreground: hsl(210 20% 98%);
+  --destructive: hsl(0 62% 30%);
+  --destructive-foreground: hsl(210 20% 98%);
+  --border: hsl(200 50% 10%);
+  --input: hsl(200 50% 10%);
+  --ring: hsl(150 30% 70%);
+}
+
+/* ---------- GLOBAL BASE STYLES ---------- */
+@layer base {
+  * {
+    @apply border-border transition-colors duration-200 outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ---------- ANIMATION UTILITIES ---------- */
+
+/* Float, wave, scroll */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes scroll {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-wave {
+  animation: wave 2s ease-in-out infinite;
+}
+
+.animate-scroll {
+  animation: scroll 2s ease-in-out infinite;
+}
+
+/* Gradient animation */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-animation {
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+/* Gentle pulse */
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s ease-in-out infinite;
+}
+
+/* ---------- CUSTOM UTILITIES ---------- */
+@layer utilities {
+  .hover-lift {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-8px);
+  }
+
+  .gentle-shadow {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  .gentle-shadow:hover {
+    box-shadow: 0 8px 30px -2px rgba(0, 0, 0, 0.15);
+  }
+
+  .bg-size-200 { background-size: 200% 100%; }
+  .bg-pos-0 { background-position: 0% 0%; }
+  .bg-pos-100 { background-position: 100% 0%; }
+}
