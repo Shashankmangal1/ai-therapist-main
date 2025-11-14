@@ -36,16 +36,26 @@ import { cn } from "@/lib/utils";
 import { MoodForm } from "@/components/mood/mood-form";
 import { AnxietyGames } from "@/components/games/anxiety-games";
 
+// --------------------
+// BACKEND API BASE URL
+// --------------------
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://calmly-1-0.onrender.com";
+
 // Client-safe API wrappers
 const getUserActivities = async (userId: string) => {
-  const res = await fetch(`/api/activities?user=${userId}`);
+  const res = await fetch(`${API_URL}/api/activity?user=${userId}`, {
+    method: "GET",
+    credentials: "include",
+  });
   if (!res.ok) throw new Error("Failed to load activities");
   return res.json();
 };
 
 const saveMoodData = async (data: { userId: string; mood: number; note: string }) => {
-  const res = await fetch(`/api/mood`, {
+  const res = await fetch(`${API_URL}/api/mood`, {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
@@ -60,8 +70,9 @@ const logActivity = async (data: {
   description: string;
   duration: number;
 }) => {
-  const res = await fetch(`/api/activity`, {
+  const res = await fetch(`${API_URL}/api/activity`, {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
@@ -416,7 +427,9 @@ export default function Dashboard() {
       let activities: Activity[] = [];
       
       try {
-        const activitiesResponse = await fetch("/api/activity/today", {
+        const activitiesResponse = await fetch(`${API_URL}/api/activity/today`, {
+          method: "GET",
+          credentials: "include",
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
           },

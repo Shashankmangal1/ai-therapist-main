@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -17,26 +16,28 @@ import { connectDB } from "./utils/db";
 import { inngest } from "./inngest/client";
 import { functions as inngestFunctions } from "./inngest/functions";
 
-
 // Create Express app
 const app = express();
 
 // Middleware
-app.use(helmet()); // Security headers
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
-  credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"],
-})); // Enable CORS with proper configuration
-app.use(express.json()); // Parse JSON bodies
-app.use(morgan("dev")); // HTTP request logger
+app.use(helmet());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+app.use(express.json());
+app.use(morgan("dev"));
 
 // Set up Inngest endpoint
 app.use(
   "/api/inngest",
   serve({ client: inngest, functions: inngestFunctions })
 );
-// OnaF6EGHhgYY9OPv
 
 // Routes
 app.get("/health", (req, res) => {
